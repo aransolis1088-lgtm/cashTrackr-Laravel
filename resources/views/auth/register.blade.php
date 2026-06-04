@@ -5,7 +5,7 @@
 @endsection
 
 @section('auth-content')
-    <form class="mt-14 space-y-5" novalidate>
+    <form method="POST" action={{ route('register.store') }} class="mt-14 space-y-5" novalidate>
         <div class="space-y-2">
             <label class="font-bold text-2xl block" for="name">Nombre</label>
 
@@ -13,12 +13,19 @@
                 name="name" />
         </div>
 
+        @error('name')
+            <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
+        @enderror
+
         <div class="space-y-2">
             <label class="font-bold text-2xl block" for="email">Email</label>
 
             <input id="email" type="email" placeholder="Email de Registro"
                 class="w-full border border-gray-300 p-3 rounded-lg" name="email" />
         </div>
+        @error('email')
+            <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
+        @enderror
 
         <div class="space-y-2">
             <label class="font-bold text-2xl block">Password</label>
