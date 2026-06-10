@@ -15,7 +15,6 @@ class RegisterController extends Controller
     public function store(SignupRequest $request)
     {
         $data = $request->validated();
-
         dd($data);
     }
 }
