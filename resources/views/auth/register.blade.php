@@ -10,7 +10,7 @@
             <label class="font-bold text-2xl block" for="name">Nombre</label>
 
             <input id="name" type="text" placeholder="Tu Nombre" class="w-full border border-gray-300 p-3 rounded-lg"
-                name="name" />
+                name="name" value="{{ old('name') }}" />
         </div>
 
         @error('name')
@@ -21,7 +21,7 @@
             <label class="font-bold text-2xl block" for="email">Email</label>
 
             <input id="email" type="email" placeholder="Email de Registro"
-                class="w-full border border-gray-300 p-3 rounded-lg" name="email" />
+                class="w-full border border-gray-300 p-3 rounded-lg" name="email" value="{{ old('email') }}" />
         </div>
         @error('email')
             <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">{{ $message }}</p>
