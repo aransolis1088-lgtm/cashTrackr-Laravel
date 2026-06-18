@@ -17,5 +17,13 @@ Route::get('/auth/login', [LoginController::class, 'index'])->name('login');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/home');
+    return redirect()->route('dashboard')->with('success', '¡Tu correo electrónico ha sido verificado con éxito!');
 })->middleware('auth', 'signed')->name('verification.verify');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
