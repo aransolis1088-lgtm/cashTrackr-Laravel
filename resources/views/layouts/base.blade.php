@@ -22,19 +22,24 @@
             <div class="w-full max-w-100">
                 <img src="{{ asset('img/logo.svg') }}" alt="CashTrackr Logo" class="w-full block" />
             </div>
+            <nav class="flex flex-col lg:flex-row items-center gap-4">
+                @auth
+                    <p class="text-white font-bold">Hola, {{ Auth::user()->name }}</p>
+                @else
+                    @if (Route::has('login'))
+                        <a href="{{ route('login') }}" class="text-white font-bold uppercase p-2">
+                            Iniciar Sesión
+                        </a>
 
-            @if (Route::has('login'))
-                <nav class="flex flex-col lg:flex-row items-center gap-4">
-                    <a href="{{ route('login') }}" class="text-white font-bold uppercase p-2">
-                        Iniciar Sesión
-                    </a>
+                        <a href="{{ route('register') }}"
+                            class="font-bold uppercase border-2 border-amber-500 px-5 py-2 text-amber-500">
+                            Crear Cuenta
+                        </a>
+                    @endif
+                @endauth
 
-                    <a href="{{ route('register') }}"
-                        class="font-bold uppercase border-2 border-amber-500 px-5 py-2 text-amber-500">
-                        Crear Cuenta
-                    </a>
-                </nav>
-            @endif
+            </nav>
+
         </div>
     </header>
 
