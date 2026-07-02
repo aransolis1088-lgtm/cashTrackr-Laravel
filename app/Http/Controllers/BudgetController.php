@@ -18,9 +18,11 @@ class BudgetController extends Controller
      */
     public function index()
     {
+        $budgets = Auth::user()->budgets()->get();
 
-        return view('dashboard');
-
+        return view('dashboard', [
+            'budgets' => $budgets,
+        ]);
     }
 
     /**
