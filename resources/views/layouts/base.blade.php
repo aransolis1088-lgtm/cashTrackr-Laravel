@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ config('app.name', 'CashTrackr') }} - @yield('title')</title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @fonts
 
     <!-- Styles / Scripts -->
@@ -45,7 +45,7 @@
 
         </div>
     </header>
-    @if(session('success'))
+    @if (session('success'))
         <div class="max-w-5xl mx-auto">
             <x-alert :message="session('success')" />
         </div>
