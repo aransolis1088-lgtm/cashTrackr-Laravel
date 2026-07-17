@@ -3,15 +3,20 @@ import { Budget } from "../../types/budgets"
 import AmountDisplay from '../../Components/AmountDisplay'
 import ExpenseModal from '../../Components/ExpenseModal'
 import { useExpenseModalStore } from '../../stores/expense-modal-store'
+import { Category } from '../../types/category'
 
 type Props = {
     budget: Budget
+    categories: Category[]
 }
 
 
-export default function Show({ budget }: Props) {
+export default function Show({ budget, categories }: Props) {
 
     const openCreateModal = useExpenseModalStore((state) => state.openCreateModal);
+    useExpenseModalStore.getState().setBudget(budget);
+    useExpenseModalStore.getState().setCategories(categories);
+
     return (
         <>
             <Head title={`Presupuesto: ${budget.name}`} />
