@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react'
 import { Budget } from "../../types/budgets"
 import AmountDisplay from '../../Components/AmountDisplay'
 import ExpenseModal from '../../Components/ExpenseModal'
+import { useExpenseModalStore } from '../../stores/expense-modal-store'
 
 type Props = {
     budget: Budget
@@ -9,6 +10,8 @@ type Props = {
 
 
 export default function Show({ budget }: Props) {
+
+    const openCreateModal = useExpenseModalStore((state) => state.openCreateModal);
     return (
         <>
             <Head title={`Presupuesto: ${budget.name}`} />
@@ -40,6 +43,7 @@ export default function Show({ budget }: Props) {
                     <button
                         type="button"
                         className="bg-purple-950 hover:bg-purple-800 px-5 py-2 my-5 rounded-lg text-white font-bold text-xl cursor-pointer"
+                        onClick={openCreateModal}
                     >Nuevo Gasto</button>
                 </div>
             </section>
