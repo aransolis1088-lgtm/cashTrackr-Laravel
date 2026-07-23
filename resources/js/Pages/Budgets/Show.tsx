@@ -8,6 +8,7 @@ import { Category } from '../../types/category'
 import { useEffect, useState } from 'react'
 import { formatDate } from '../../utils'
 import ProgressBar from '../../Components/ProgressBar'
+import ExpenseDropdown from '../../Components/ExpenseDropdown'
 
 type Props = {
     budget: Budget
@@ -110,7 +111,7 @@ export default function Show({ budget, categories, spent }: Props) {
                                                     <p className='text-sm text-gray-400'>Agregado el: {formatDate(expense.created_at)}</p>
                                                 </td>
                                                 <td className="py-6 px-10 flex justify-end gap-3">
-
+                                                    <ExpenseDropdown expense={expense} />
                                                 </td>
                                             </tr>
                                         ))}
