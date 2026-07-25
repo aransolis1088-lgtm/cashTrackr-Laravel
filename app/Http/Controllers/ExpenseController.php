@@ -26,8 +26,12 @@ class ExpenseController extends Controller
             ->with('success', 'Gasto Actualizado Correctamente');
     }
 
-    public function destroy(Expense $expense)
+    public function destroy(Budget $budget, Expense $expense)
     {
-        //
+        Expense::destroy($expense->getKey());
+
+        return redirect()
+            ->route('budgets.show', $budget)
+            ->with('success', 'Gasto Eliminado Correctamente');
     }
 }

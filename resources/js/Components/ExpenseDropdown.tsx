@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Expense } from '../types/expense'
 import { useExpenseModalStore } from '../stores/expense-modal-store'
+import { useDeleteExpenseStore } from '../stores/expense-delete-store'
 
 type Props = {
     expense: Expense
@@ -9,6 +10,7 @@ type Props = {
 export default function ExpenseDropdown({ expense }: Props) {
 
     const openEditModal = useExpenseModalStore(state => state.openEditModal)
+    const openDeleteModal = useDeleteExpenseStore(state => state.openModal)
 
     return (
         <Menu as="div" className="relative inline-block ">
@@ -33,7 +35,7 @@ export default function ExpenseDropdown({ expense }: Props) {
 
                     <MenuItem>
                         <button
-                            onClick={() => { }}
+                            onClick={() => openDeleteModal(expense)}
                             className="group w-full flex items-center px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden dark:text-gray-300 dark:data-focus:bg-white/5 dark:data-focus:text-white"
                         >
 
