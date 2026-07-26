@@ -28,8 +28,7 @@ export default function Show({ budget, categories, spent }: Props) {
     }, [flash])
 
     const openCreateModal = useExpenseModalStore((state) => state.openCreateModal);
-    useExpenseModalStore.getState().setBudget(budget);
-    useExpenseModalStore.getState().setCategories(categories);
+
 
     const remaining = +budget.amount - +spent
     const percentageUsed = Math.round((+spent / +budget.amount) * 100)
@@ -41,6 +40,11 @@ export default function Show({ budget, categories, spent }: Props) {
         }, 100)
         return () => clearTimeout(timeout)
     }, [percentageUsed])
+
+    useEffect(() => {
+        useExpenseModalStore.getState().setBudget(budget);
+        useExpenseModalStore.getState().setCategories(categories);
+    }, [budget, categories])
 
     return (
         <>
