@@ -20,7 +20,25 @@ export default function CashTrackrAgent({ budgetId }: Props) {
     return (
         <section className='p-10 lg:px-5 shadow-lg mt-10'>
             <h2 className="text-3xl font-bold">Pregunta sobre tu Presupuesto, añade gastos y más.</h2>
-            <div className="space-y-3 mb-4 mt-8"></div>
+            <div className="space-y-3 mb-4 mt-8">
+                {messages.map(m => (
+                    <div key={m.id}>
+                        {m.parts.map((part, i) => {
+                            if(part.type !== 'text') return null
+                            const text = part.text.trim()
+
+                            if(!text) return null
+
+                            return (
+                                <p classname='text-xl' key={i}>
+                                    <strong>{m.role === 'user' ? 'Aran' : 'CashTrackr IA'}</strong>
+                                    {text}
+                                </p>
+                            )
+                        }) }
+                    </div>
+                ))}
+            </div>
 
             <form
                 onSubmit={(e) => {
