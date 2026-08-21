@@ -2,23 +2,21 @@
 
 namespace App\Ai\Agents;
 
+use App\Ai\Tools\AddExpense;
 use App\Ai\Tools\SearchExpenses;
 use Laravel\Ai\Contracts\Agent;
-use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
-use Laravel\Ai\Contracts\Tool;
-use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
-use Stringable;
 
 class BudgetAssistant implements Agent, HasTools
 {
     use Promptable;
 
     public int $budgetId = 0;
-    public string $budgetContext = '';
-    public bool $hasCategories = true;
 
+    public string $budgetContext = '';
+
+    public bool $hasCategories = true;
 
     public function instructions(): string
     {
@@ -51,6 +49,7 @@ class BudgetAssistant implements Agent, HasTools
     {
         return [
             new SearchExpenses($this->budgetId),
+            new AddExpense($this->budgetId, $this->hasCategories),
         ];
     }
 }

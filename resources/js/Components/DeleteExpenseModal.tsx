@@ -15,7 +15,7 @@ export default function DeleteExpenseModal() {
 
     const handleDelete = () => {
         router.delete(
-            route('expense.destroy', {
+            route('expenses.destroy', {
                 budget: budget.id,
                 expense: expense.id
             }), {

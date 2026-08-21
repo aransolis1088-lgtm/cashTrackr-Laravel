@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport } from 'ai';
+import { toast } from 'react-toastify';
+import { router } from '@inertiajs/react';
 
 type Props = {
     budgetId: number
+    name: string
 }
 
 
-export default function CashTrackrAgent({ budgetId }: Props) {
+export default function CashTrackrAgent({ budgetId, name }: Props) {
 
     const [input, setInput] = useState('');
 
@@ -15,6 +18,17 @@ export default function CashTrackrAgent({ budgetId }: Props) {
         transport: new DefaultChatTransport({
             api: `/dashboard/budgets/${budgetId}/chat`
         }),
+        onFinish: ({ message }) => {
+            const expenseCreated = message.parts.some(part => {
+                if (!part.output) return null
+                return part.output.startsWith('[EXPENSE_CREATED]')
+            })
+
+            if (expenseCreated) {
+                toast.success('Gasto agregado correctamente')
+                router.reload({ only: ['expenses', 'budget'] })
+            }
+        }
     })
 
     return (
@@ -22,20 +36,25 @@ export default function CashTrackrAgent({ budgetId }: Props) {
             <h2 className="text-3xl font-bold">Pregunta sobre tu Presupuesto, añade gastos y más.</h2>
             <div className="space-y-3 mb-4 mt-8">
                 {messages.map(m => (
-                    <div key={m.id}>
+                    <div
+                        key={m.id}
+                        className={`p-3 rounded-lg max-w-[80%] ${m.role === 'user' ? 'bg-amber-500 text-white ml-auto' : 'bg-gray-100 mr-auto'}`}
+                    >
                         {m.parts.map((part, i) => {
-                            if(part.type !== 'text') return null
-                            const text = part.text.trim()
+                            if (part.type !== 'text') return null
+                            const text = part.text
+                                .replace('[EXPENSE_CREATED]', '')
+                                .trim()
 
-                            if(!text) return null
+                            if (!text) return null
 
                             return (
-                                <p classname='text-xl' key={i}>
-                                    <strong>{m.role === 'user' ? 'Aran' : 'CashTrackr IA'}</strong>
+                                <p className='text-xl' key={i}>
+                                    <strong>{m.role === 'user' ? name : 'CashTrackr IA'}: </strong>
                                     {text}
                                 </p>
                             )
-                        }) }
+                        })}
                     </div>
                 ))}
             </div>

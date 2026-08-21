@@ -21,7 +21,7 @@ type Props = {
 
 export default function Show({ budget, categories, spent }: Props) {
 
-    const { flash } = usePage().props
+    const { flash, user } = usePage().props
     useEffect(() => {
         if (flash?.success) {
             toast.success(flash.success)
@@ -138,7 +138,7 @@ export default function Show({ budget, categories, spent }: Props) {
                 )}
             </section>
 
-            <CashTrackrAgent budgetId={budget.id} />
+            <CashTrackrAgent budgetId={budget.id} name={user.name} />
             <ExpenseModal />
             <DeleteExpenseModal />
             <ToastContainer />
